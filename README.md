@@ -26,8 +26,8 @@ Installing Autodeploy in a Repo
 Install the autodeploy scripts to the server's deployment repository (generally
 a bare repo). 
   1. Go to the repository that you wish to update the deployment directories
-		 when it's pushed to.
-	2. run this command:
+     when it's pushed to.
+  2. run this command:
 
 `$ autodeploy --init`
 
@@ -53,6 +53,8 @@ The line beginning with `branches=` contains the list of branches that are
 mapped to deployment directories.
 
 If you wish to have a custom deployment directory name for a branch then add 
+
 `branchName="deployment_directory_name"`
+
 To the end of the file.
 
