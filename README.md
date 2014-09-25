@@ -11,7 +11,8 @@ that hold the contents of a branch in your git repo.
 Installation
 ============
 run 
-    $sudo ./install.sh
+
+`$sudo ./install.sh`
 
 Usage
 =====
@@ -27,7 +28,8 @@ a bare repo).
   1. Go to the repository that you wish to update the deployment directories
 		 when it's pushed to.
 	2. run this command:
-    $ autodeploy --init
+
+`$ autodeploy --init`
 
 **NOTE:** the user that git runs under in this repository needs to have proper
 permissions to write to the deployment directory. If you are using Apache or
@@ -51,6 +53,6 @@ The line beginning with `branches=` contains the list of branches that are
 mapped to deployment directories.
 
 If you wish to have a custom deployment directory name for a branch then add 
-    branchName="deployment_directory_name"
+`branchName="deployment_directory_name"`
 To the end of the file.
 
