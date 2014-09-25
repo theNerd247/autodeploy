@@ -1,16 +1,35 @@
 #!/bin/bash
 
+##############################
+# program name
+#
+# author: theNerd247 (nharvey@spsu.edu)
+# version: 0.0.3
+# 
+# Automatic deployment script for websites
+##############################
+
+#default config variables 
+branchfile=/etc/autodeploy/autodeploy
+logfile=/var/log/autodeploy.log
+webbase=/srv/http/
+website_name="autodeploy_website"
+
 #set the user mask to allow for creation of directories
 umask g+w
 
-#files
-branchfile=$HOME/gitdeploy
-logfile=/var/log/gitdeploy.log
+# read in configuration for repo
+. autodeploy.conf
 
-#basepath for the website
-webbase=/srv/http/csewiki
+#debugging variable
+TST=1
 
-TST=0
+function debug 
+{
+	for cmd in "$@"; do 
+		$cmd
+	done
+}
 
 function userecho
 {
@@ -30,7 +49,7 @@ function create
 	fi
 	
 	#create repo, set pushed branch
-	git clone --branch $branch ~/csewiki.git $DEPLOYDIR
+	git clone --branch $branch $GIT_DIR $DEPLOYDIR
 
 	if [[ ! -d $DEPLOYDIR ]] ; then
 		echo "creating directory failed"
@@ -70,18 +89,14 @@ function delete
 	exit
 }
 
-#read in branches to track in git
-branches=$(cat $branchfile)
-
 #get updated branch
 read old new refname
 
 # get deploy branch
 for branch in $branches; do
-	if [[ $refname == "refs/heads/$branch" ]]; then
-		if [[ $TST == 1 ]] ; then
-			echo "DEBUG: deploy branch found: $branch"
-		fi
+	debug "echo $branch"
+	if [[ $refname == "$branch" ]]; then #"refs/heads/$branch" ]]; then
+		debug "echo DEBUG: deploy branch found: $branch"
 		break
 	fi
 	branch=""
@@ -94,10 +109,11 @@ if [[ -z $branch ]] ; then
 fi
 
 #set the DEPLOYDIR
-if [[ $branch == "master" ]] ; then
-	DEPLOYDIR="$webbase"
-else
-	DEPLOYDIR="$webbase$branch"
+DEPLOYDIR=$webbase${!branch}
+
+#set the default deployment directory
+if [[ -z DEPLOYDIR ]]; then
+	DEPLOYDIR=$website_name"$branch"
 fi
 
 if [[ ! -e refs/heads/$branch ]]; then
@@ -117,15 +133,14 @@ else
 	fi
 fi
 
-if [[ $TST == 1 ]] ; then
-	echo "DEBUG: status: $status"
-	echo "DEBUG: refname: $refname DEPLOYDIR: $DEPLOYDIR"
-	echo "DEBUG: [LOG UTC:$(date --utc +"%D %T")] $CMD: $branch"
-	exit;
-fi
+#operations to run when debugging
+debug "echo DEBUG: status: $status"
+debug	"echo DEBUG: refname: $refname DEPLOYDIR: $DEPLOYDIR"
+debug	"echo DEBUG: [LOG UTC:$(date --utc +"%D %T")] $CMD: $branch"
+debug "exit"
 
 # log action
-echo "[LOG UTC:$(date --utc +"%D %T")] $CMD: $branch" >> $logfile
+echo "[LOG UTC:$(date --utc +"%D %T"),$website_name] $CMD: $branch" >> $logfile
 
 # run command based on action
 $CMD
