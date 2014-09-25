@@ -1,5 +1,12 @@
 #!/bin/bash
-
+##############################
+# program name
+#
+# author: theNerd247 (nharvey@spsu.edu)
+# version: 0.0.1
+# 
+# license: GPLv2 see LICENSE
+##############################
 install_dir="/usr/share/autodeploy/"
 install_bindir="/usr/bin"
 

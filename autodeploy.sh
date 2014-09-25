@@ -1,5 +1,4 @@
 #!/bin/bash 
-
 ##############################
 # program name
 #
@@ -8,6 +7,8 @@
 # 
 # autodeployment user interface scsript
 # see github.com/thernerd247/autodeploy for more info 
+# 
+# license: GPLv2 see LICENSE
 ##############################
 install_files="post-receive autodeploy.conf"
 

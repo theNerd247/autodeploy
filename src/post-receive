@@ -1,5 +1,4 @@
 #!/bin/bash
-
 ##############################
 # program name
 #
@@ -7,6 +6,8 @@
 # version: 0.0.3
 # 
 # Automatic deployment script for websites
+# 
+# license: GPLv2 see LICENSE
 ##############################
 
 #default config variables 
