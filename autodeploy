@@ -26,9 +26,15 @@ if [[ -z $1 ]]; then
 	exit
 fi
 
+#check if in valid git directory
+if [[ -d .git/hooks ]]; then
+	$GIT_DIR=".git"
+elif [[ -d ./hooks ]]; then
+	$GIT_DIR="."
+fi
 
 if [[ $1 == "--init" ]]; then
 	for file in $install_files; do
-		cp /usr/share/autodeploy/$install_file .git/hooks/
+		cp /usr/share/autodeploy/$install_file $GIT_DIR/hooks/
 	done
 fi

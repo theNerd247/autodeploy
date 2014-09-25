@@ -10,6 +10,8 @@
 install_dir="/usr/share/autodeploy/"
 install_bindir="/usr/bin"
 
+install_files="post-receive autodeploy.conf"
+
 #install UI script (autodeploy)
 cp autodeploy $install_bindir
 chmod uga+x $install_bindir"/autodeploy.sh"
@@ -17,4 +19,9 @@ chmod uga+x $install_bindir"/autodeploy.sh"
 #install scripts to install dir
 mkdir -p $install_dir
 cp -r src/* $install_dir
-chmod uga+x $install_dir/*
+for file in $install_files; do
+	cp cp -r src/$file $install_dir
+done
+
+#make installed files executable
+chmod uga+x $install_dir/post-receive
