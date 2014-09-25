@@ -46,7 +46,7 @@ what happens during the push. When a deployment branch is removed during a push
 then the deployment directory is hidden instead of being removed (incase you
 need it later).
 
-Edit the .git/hook/autodeploy.conf file using your favorite (or not so favorite)
+Edit the `.git/hook/autodeploy.conf` file using your favorite (or not so favorite)
 text editor to manage the branches to deploy.
 
 The line beginning with `branches=` contains the list of branches that are
