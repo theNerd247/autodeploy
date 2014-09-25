@@ -15,6 +15,6 @@ cp autodeploy $install_bindir
 chmod uga+x $install_bindir"/autodeploy.sh"
 
 #install scripts to install dir
-mkdir $install_dir
+mkdir -p $install_dir
 cp -r src/* $install_dir
 chmod uga+x $install_dir/*
