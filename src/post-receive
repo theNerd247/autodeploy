@@ -20,7 +20,7 @@ website_name="autodeploy_website"
 umask g+w
 
 # read in configuration for repo
-. autodeploy.conf
+. hooks/autodeploy.conf
 
 #debugging variable
 TST=1
