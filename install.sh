@@ -13,12 +13,14 @@ install_bindir="/usr/bin"
 install_files="post-receive autodeploy.conf"
 
 #install UI script (autodeploy)
+echo "installing to executable to $install_bindir"
 cp autodeploy $install_bindir
 chmod uga+x $install_bindir"/autodeploy"
 
 #install scripts to install dir
 mkdir -p $install_dir
 for file in $install_files; do
+	echo "installing files to $install_dir"
 	cp -r src/$file $install_dir
 done
 

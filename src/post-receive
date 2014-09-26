@@ -114,7 +114,7 @@ DEPLOYDIR=$webbase${!branch}
 
 #set the default deployment directory
 if [[ -z DEPLOYDIR ]]; then
-	DEPLOYDIR=$website_name"$branch"
+	DEPLOYDIR=$webbase/$website_name"$branch"
 fi
 
 if [[ ! -e refs/heads/$branch ]]; then
