@@ -28,13 +28,16 @@ fi
 
 #check if in valid git directory
 if [[ -d .git/hooks ]]; then
-	$GIT_DIR=".git"
+	GIT_DIR=".git"
 elif [[ -d ./hooks ]]; then
-	$GIT_DIR="."
+	GIT_DIR="."
+else
+	echo "You must be in a git repo to install autodeploy"
+	exit
 fi
 
 if [[ $1 == "--init" ]]; then
 	for file in $install_files; do
-		cp /usr/share/autodeploy/$install_file $GIT_DIR/hooks/
+		cp /usr/share/autodeploy/$file $GIT_DIR/hooks/
 	done
 fi
