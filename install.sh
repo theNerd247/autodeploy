@@ -19,7 +19,7 @@ chmod uga+x $install_bindir"/autodeploy"
 #install scripts to install dir
 mkdir -p $install_dir
 for file in $install_files; do
-	cp cp -r src/$file $install_dir
+	cp -r src/$file $install_dir
 done
 
 #make installed files executable
