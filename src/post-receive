@@ -53,7 +53,6 @@ function create
 	fi
 	
 	#create repo, set pushed branch
-	cd $webbase
 	git clone --branch $branch $GIT_DIR $DEPLOYDIR
 
 	if [[ ! -d $DEPLOYDIR ]] ; then
