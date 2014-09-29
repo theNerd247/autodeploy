@@ -39,6 +39,12 @@ fi
 if [[ $1 == "--init" ]]; then
 	for file in $install_files; do
 		echo "copying files from /usr/share/autodeploy to hooks dir"
-		cp /usr/share/autodeploy/$file $GIT_DIR/hooks/
+		#don't override config files
+		if [[ $file == "autodeploy.conf" ]]; then
+			opt="-n"
+		else
+			opt=""
+		fi
+		cp $opt /usr/share/autodeploy/$file $GIT_DIR/hooks/
 	done
 fi

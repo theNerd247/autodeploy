@@ -20,16 +20,18 @@ website_name="autodeploy_website"
 umask g+w
 
 # read in configuration for repo
-. hooks/autodeploy.conf
+. $GIT_DIR/hooks/autodeploy.conf
 
 #debugging variable
-TST=1
+TST=0
 
 function debug 
 {
-	for cmd in "$@"; do 
-		$cmd
-	done
+	if [[ $TST == 1 ]]; then
+		for cmd in "$@"; do 
+			$cmd
+		done
+	fi
 }
 
 function userecho
@@ -42,14 +44,16 @@ function userecho
 function create
 {
 	userecho "A new deployment directory was found\nCreating deployment directory: $branch"
-	cd /srv/http/
 	
 	#check of old dir exists
-	if [[ -d "$webbase/.$branch" ]] ; then
+	if [[ -d ".$DEPLOYDIR" ]] ; then
+		echo "hidden directory found....restoring"
 		mv ".$DEPLOYDIR" $DEPLOYDIR
+		exit
 	fi
 	
 	#create repo, set pushed branch
+	cd $webbase
 	git clone --branch $branch $GIT_DIR $DEPLOYDIR
 
 	if [[ ! -d $DEPLOYDIR ]] ; then
@@ -96,7 +100,7 @@ read old new refname
 # get deploy branch
 for branch in $branches; do
 	debug "echo $branch"
-	if [[ $refname == "$branch" ]]; then #"refs/heads/$branch" ]]; then
+	if [[ $refname == "refs/heads/$branch" ]]; then
 		debug "echo DEBUG: deploy branch found: $branch"
 		break
 	fi
@@ -110,7 +114,7 @@ if [[ -z $branch ]] ; then
 fi
 
 #set the DEPLOYDIR
-DEPLOYDIR=$webbase${!branch}
+DEPLOYDIR=$webbase/${!branch}
 
 #set the default deployment directory
 if [[ -z DEPLOYDIR ]]; then
