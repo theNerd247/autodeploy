@@ -20,6 +20,7 @@ website_name="autodeploy_website"
 umask g+w
 
 # read in configuration for repo
+gitdir=$GIT_DIR
 . $GIT_DIR/hooks/autodeploy.conf
 
 #debugging variable
@@ -53,7 +54,7 @@ function create
 	fi
 	
 	#create repo, set pushed branch
-	git clone --branch $branch $GIT_DIR $DEPLOYDIR
+	git clone --branch $branch $gitdir $DEPLOYDIR
 
 	if [[ ! -d $DEPLOYDIR ]] ; then
 		echo "creating directory failed"
@@ -87,9 +88,7 @@ function commit
 function delete
 {
 	userecho "You've requested that this branch be deleted.\nRemoving from deploy directory list.\n(I'll keep the actual deployment directory incase you need it later.)" 
-	mv $DEPLOYDIR "$webbase/.$branch"
-	temp=$(grep -v -e "$branch" $branchfile) 
-	echo -e "$temp" > $branchfile
+	mv $DEPLOYDIR '$webbase/.$DEPLOYDIR'
 	exit
 }
 
@@ -115,8 +114,8 @@ fi
 #set the DEPLOYDIR
 DEPLOYDIR=$webbase/${!branch}
 
-#set the default deployment directory
-if [[ -z DEPLOYDIR ]]; then
+#set the default deployment directory if needed
+if [[ -z ${!branch} ]]; then
 	DEPLOYDIR=$webbase/$website_name"$branch"
 fi
 
