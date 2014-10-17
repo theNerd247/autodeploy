@@ -81,8 +81,8 @@ function commit
 	cd $DEPLOYDIR
 	git add -A
 	git commit -m "pre deployment update for branch: $branch"
-	git push origin $branch
 	pull
+	git push origin $branch
 }
 
 function delete
