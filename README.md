@@ -12,10 +12,10 @@ Installation
 ============
 run 
 
-`$ git clone https://github.com/theNerd247/autodeploy.git
-$ cd autodeploy
-$ chmod a+x install.sh 
-$ sudo ./install.sh`
+    $ git clone https://github.com/theNerd247/autodeploy.git
+    $ cd autodeploy
+    $ chmod a+x install.sh 
+    $ sudo ./install.sh
 
 Usage
 =====
