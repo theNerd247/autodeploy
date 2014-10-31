@@ -143,6 +143,9 @@ debug	"echo DEBUG: [LOG UTC:$(date --utc +"%D %T")] $CMD: $branch"
 debug "exit"
 
 # log action
+if [[ ! -e $logfile ]]; then
+	touch $logfile
+fi
 echo "[LOG UTC:$(date --utc +"%D %T"),$website_name] $CMD: $branch" >> $logfile
 
 # run command based on action
